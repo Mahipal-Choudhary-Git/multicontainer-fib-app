@@ -4,3 +4,5 @@
 **/Dockerfile.dev
 
 docker-compose.yml
+
+**/build
