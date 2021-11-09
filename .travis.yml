@@ -1,0 +1,23 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - echo "passed"
+
+script:
+    - echo "passed"
+
+after_success:
+    - docker build -t maipal/multi-fib-client ./client
+    - docker build -t maipal/multi-fib-server ./server
+    - docker build -t maipal/multi-fib-worker ./worker
+    - docker build -t maipal/multi-fib-nginx ./nginx
+    # log in to the docker cli
+    - echo "$docker_password" | docker login -u "$docker_user" --password-stdin
+
+    # push the images to the docker hub
+    - docker push maipal/multi-fib-client
+    - docker push maipal/multi-fib-server
+    - docker push maipal/multi-fib-worker
+    - docker push maipal/multi-fib-nginx
